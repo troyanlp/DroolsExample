@@ -13,10 +13,8 @@ import com.everis.drools.entity.Customer;
 import com.everis.drools.entity.Order;
 import com.everis.drools.entity.Product;
 import com.everis.drools.entity.User;
-/**
- * Hello world!
- *
- */
+
+
 public class OrderTest 
 {
     public static void main( String[] args ) {

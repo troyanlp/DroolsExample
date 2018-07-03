@@ -46,6 +46,18 @@
 			<version>3.3.2</version>
 		</dependency>
 		
+		<!-- Decision tables -->
+		<dependency>
+		    <groupId>org.kie</groupId>
+		    <artifactId>kie-ci</artifactId>
+		    <version>7.1.0.Beta2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.drools</groupId>
+		    <artifactId>drools-decisiontables</artifactId>
+		    <version>7.1.0.Beta2</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>
