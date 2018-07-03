@@ -1,0 +1,5 @@
+com\neo\drools\entity\Customer.class
+com\neo\drools\entity\Product.class
+com\neo\drools\entity\User.class
+com\neo\drools\OrderTest.class
+com\neo\drools\entity\Order.class
