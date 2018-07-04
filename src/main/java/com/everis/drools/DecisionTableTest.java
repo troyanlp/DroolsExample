@@ -1,35 +1,117 @@
 package com.everis.drools;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.drools.decisiontable.InputType;
+import org.drools.decisiontable.SpreadsheetCompiler;
 import org.kie.api.KieServices;
+import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.internal.KnowledgeBase;
+import org.kie.internal.KnowledgeBaseFactory;
+import org.kie.internal.builder.DecisionTableConfiguration;
+import org.kie.internal.builder.DecisionTableInputType;
+import org.kie.internal.builder.KnowledgeBuilder;
+import org.kie.internal.builder.KnowledgeBuilderFactory;
+import org.kie.internal.io.ResourceFactory;
+import org.kie.internal.runtime.StatelessKnowledgeSession;
 
 import com.everis.drools.entity.Customer;
 import com.everis.drools.entity.Order;
 import com.everis.drools.entity.Product;
-import com.everis.drools.entity.User;
 
-public class OrderTest 
+
+public class DecisionTableTest 
 {
+	 private static StatelessKnowledgeSession session;
+
+    
     public static void main( String[] args ) {
     	 // KieServices is the factory for all KIE services
-        KieServices ks = KieServices.Factory.get();
+    	DecisionTableTest test = new DecisionTableTest();
+    	try {
+			test.leerExcel();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
+
+	public void leerExcel() throws Exception {
+		KieServices ks = KieServices.Factory.get();
+        
+        // Load Excel file
+		KnowledgeBase knowledgeBase = createKnowledgeBaseFromSpreadsheet();
+		session = knowledgeBase.newStatelessKnowledgeSession();
+        
+        //KieRepository kieRepository = ks.getRepository();
+        
+        //ReleaseId krDefaultReleaseId = kieRepository.getDefaultReleaseId();
 
         // From the kie services, a container is created from the classpath
         KieContainer kc = ks.getKieClasspathContainer();
+        //KieContainer kc = ks.newKieContainer(krDefaultReleaseId);
 
+        //InputStream in = getClass().getResourceAsStream("/rules/spreadsheets/rules.xls");
+        //System.out.println(getDRL(in));
+        
         try {
 			execute( kc );
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    }
+	}
+	
+	private static KnowledgeBase createKnowledgeBaseFromSpreadsheet()
+	
+	            throws Exception {
+	
+	        DecisionTableConfiguration dtconf = KnowledgeBuilderFactory
+	
+	                .newDecisionTableConfiguration();
+	
+	        dtconf.setInputType(DecisionTableInputType.XLS);
+	
+	 
+	
+	        KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
+	
+	                .newKnowledgeBuilder();
+	
+	        knowledgeBuilder.add(ResourceFactory
+	
+	                .newClassPathResource("rules/spreadsheets/rules.xls"),
+	
+	                ResourceType.DTABLE, dtconf);
+	
+	        
+	
+	        if (knowledgeBuilder.hasErrors()) {
+	
+	            throw new RuntimeException(knowledgeBuilder.getErrors().toString());
+	
+	        }      
+	
+	 
+	
+	        KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
+	
+	        knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
+	
+	        return knowledgeBase;
+	
+	    }
+
+	private String getDRL(InputStream stream)
+	{
+	    SpreadsheetCompiler comp = new SpreadsheetCompiler();
+	    String drl = comp.compile(false, stream, InputType.XLS);
+	    return drl;
+	}
     
     public static void execute( KieContainer kc ) throws Exception{
         // From the container, a session is created based on
@@ -42,6 +124,7 @@ public class OrderTest
             Order o = orderList.get(i);
             ksession.insert(o);
             ksession.fireAllRules();
+            session.execute(o);
             
         }
         
@@ -114,7 +197,7 @@ public class OrderTest
 	private static void showResults(List<Order> orders) {
 		for (Order order : orders) {
 			System.out.println("Cliente " + order.getCustomer().getName() + " productos: " + order.getProducts().size()
-					+ " Precio total: " + order.getTotalPrice());
+					+ " Precio total: " + order.getTotalPrice() + " y un cupon: " + order.getCustomer().getCoupon());
 		}
 	}
     
