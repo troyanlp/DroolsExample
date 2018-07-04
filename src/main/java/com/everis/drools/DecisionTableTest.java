@@ -146,25 +146,25 @@ public class DecisionTableTest
         
     	List<Order> orderList = new ArrayList<Order>();
     	{
-             Order order = new Order(customerA);  
+             Order order = new Order(customerA, true);  
              order.addProduct(productA);
              order.addProduct(productB);
              orderList.add(order);  
         }
     	{
-            Order order = new Order(customerB);  
+            Order order = new Order(customerB, true);  
             order.addProduct(productA);
             order.addProduct(productB);
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerC);  
+            Order order = new Order(customerC, true);  
             order.addProduct(productA);
             order.addProduct(productB);
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerD);  
+            Order order = new Order(customerD, true);  
             order.addProduct(productA);
             order.addProduct(productB);
             order.addProduct(new Product(3,"Product 3", 60));
@@ -178,7 +178,7 @@ public class DecisionTableTest
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerE);  
+            Order order = new Order(customerE, true);  
             order.addProduct(productA);
             order.addProduct(productB);
             order.addProduct(new Product(3,"Product 3", 60));
@@ -197,7 +197,7 @@ public class DecisionTableTest
 	private static void showResults(List<Order> orders) {
 		for (Order order : orders) {
 			System.out.println("Cliente " + order.getCustomer().getName() + " productos: " + order.getProducts().size()
-					+ " Precio total: " + order.getTotalPrice() + " y un cupon: " + order.getCustomer().getCoupon());
+					+ " Precio total: " + order.getTotalPrice());
 		}
 	}
     

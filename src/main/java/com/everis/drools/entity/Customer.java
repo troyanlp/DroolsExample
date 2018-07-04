@@ -8,7 +8,6 @@ public class Customer {
 	
 	private int status;
 	private String name;
-	private String coupon;
 	
 	public Customer(int status, String name) {
 		super();
@@ -32,13 +31,5 @@ public class Customer {
 		this.name = name;
 	}
 
-	public String getCoupon() {
-		return coupon;
-	}
-
-	public void setCoupon(String coupon) {
-		System.out.println("Dentro del set coupon!");
-		this.coupon = coupon;
-	}
 	
 }

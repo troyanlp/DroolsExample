@@ -63,25 +63,25 @@ public class OrderTest
         
     	List<Order> orderList = new ArrayList<Order>();
     	{
-             Order order = new Order(customerA);  
+             Order order = new Order(customerA, false);  
              order.addProduct(productA);
              order.addProduct(productB);
              orderList.add(order);  
         }
     	{
-            Order order = new Order(customerB);  
+            Order order = new Order(customerB, false);  
             order.addProduct(productA);
             order.addProduct(productB);
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerC);  
+            Order order = new Order(customerC, false);  
             order.addProduct(productA);
             order.addProduct(productB);
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerD);  
+            Order order = new Order(customerD, false);  
             order.addProduct(productA);
             order.addProduct(productB);
             order.addProduct(new Product(3,"Product 3", 60));
@@ -95,7 +95,7 @@ public class OrderTest
             orderList.add(order);  
         }
         {
-            Order order = new Order(customerE);  
+            Order order = new Order(customerE, false);  
             order.addProduct(productA);
             order.addProduct(productB);
             order.addProduct(new Product(3,"Product 3", 60));

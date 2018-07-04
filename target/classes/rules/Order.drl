@@ -6,7 +6,7 @@ import com.everis.drools.entity.*
 rule "Initial rule"
 	salience 20
 	when
-		order : Order();
+		order : Order(order.isDecisionTable()==false);
 		totalPrice : Double() from accumulate (
 			Product( productPrice : price) from order.getProducts,
 			init (double total = 0;),
@@ -15,14 +15,15 @@ rule "Initial rule"
 		);
 	then
 		order.setTotalPrice(totalPrice);
-		//System.out.println("Total price is: " + totalPrice);
+		System.out.println("Total price is: " + totalPrice);
 end
+
 
 // Comprobamos si el cliente es SILVER, si es así aplicamos un 5% de descuento
 rule "SILVER customer rule"
 	salience 15
 	when
-		order : Order();
+		order : Order(order.isDecisionTable()==false);
 		customer : Customer ( status == Customer.SILVER_CUSTOMER) from order.getCustomer();
 	then
 		order.setTotalPrice(order.getTotalPrice() * ( 1 - (5 / 100d)));
@@ -32,7 +33,7 @@ end
 rule "GOLD customer rule"
 	salience 15
 	when
-		order : Order();
+		order : Order(order.isDecisionTable()==false);
 		customer : Customer ( status == Customer.GOLD_CUSTOMER) from order.getCustomer();
 	then
 		order.setTotalPrice(order.getTotalPrice() * ( 1 - (10 / 100d)));
@@ -45,7 +46,7 @@ rule "Number of products rule"
 	date-effective "01-JUL-2018"
 	date-expires "01-OCT-2018"
 	when
-        order : Order (products.size() >= 10);
+        order : Order (products.size() >= 10 && order.isDecisionTable()==false);
     then
     	order.setTotalPrice(order.getTotalPrice() * (1 - (15 / 100d) ) );
 end
