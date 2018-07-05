@@ -35,7 +35,7 @@ public class OrderTest
         // From the container, a session is created based on
         // its definition and configuration in the META-INF/kmodule.xml file
         KieSession ksession = kc.newKieSession("point-rulesKS");
-
+        
         List<Order> orderList = getInitData();
 
         for (int i = 0; i < orderList.size(); i++) {

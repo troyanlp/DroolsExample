@@ -1,8 +1,10 @@
 package com.everis.drools.entity;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Order {
 
@@ -10,11 +12,13 @@ public class Order {
 	private List<Product> products = new ArrayList<Product>();
 	private double totalPrice;
 	private boolean decisionTable = false;
+	private LocalDate date;
 	
 	public Order(Customer customer, boolean decisionTable) {
 		super();
 		this.customer = customer;
 		this.decisionTable = decisionTable;
+		this.date = LocalDate.now();
 	}
 
 	public Customer getCustomer() {
@@ -55,6 +59,23 @@ public class Order {
 
 	public void setDecisionTable(boolean decisionTable) {
 		this.decisionTable = decisionTable;
+	}
+	
+	public boolean isComparedToDate(String dateTable, boolean greaterThan) {
+		boolean result = true;
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDate localdate = null;
+		localdate = LocalDate.parse(dateTable, formatter);
+		
+		if(greaterThan) {
+			if(date.isAfter(localdate) || date.isEqual(localdate)) result = true;
+			else result = false;
+		}else {
+			if(date.isBefore(localdate)) result = true;
+			else result = false;
+		}
+		
+		return result;
 	}
 	
 }

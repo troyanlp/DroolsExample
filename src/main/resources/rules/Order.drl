@@ -46,7 +46,7 @@ rule "Number of products rule"
 	date-effective "01-JUL-2018"
 	date-expires "01-OCT-2018"
 	when
-        order : Order (products.size() >= 10 && order.isDecisionTable()==false);
+        order : Order (products.size() >= 10, order.isDecisionTable()==false);
     then
     	order.setTotalPrice(order.getTotalPrice() * (1 - (15 / 100d) ) );
 end

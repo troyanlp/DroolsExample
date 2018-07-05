@@ -1,11 +1,14 @@
 package com.everis.drools;
 
 import java.io.InputStream;
+import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.drools.decisiontable.InputType;
 import org.drools.decisiontable.SpreadsheetCompiler;
+import org.eclipse.jdt.internal.compiler.ast.LocalDeclaration;
 import org.kie.api.KieServices;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
@@ -33,27 +36,22 @@ public class DecisionTableTest
     	 // KieServices is the factory for all KIE services
     	DecisionTableTest test = new DecisionTableTest();
     	try {
-			test.leerExcel();
+			test.readExcel();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }
 
-	public void leerExcel() throws Exception {
+	public void readExcel() throws Exception {
 		KieServices ks = KieServices.Factory.get();
         
         // Load Excel file
 		KnowledgeBase knowledgeBase = createKnowledgeBaseFromSpreadsheet();
 		session = knowledgeBase.newStatelessKnowledgeSession();
-        
-        //KieRepository kieRepository = ks.getRepository();
-        
-        //ReleaseId krDefaultReleaseId = kieRepository.getDefaultReleaseId();
 
         // From the kie services, a container is created from the classpath
         KieContainer kc = ks.getKieClasspathContainer();
-        //KieContainer kc = ks.newKieContainer(krDefaultReleaseId);
 
         //InputStream in = getClass().getResourceAsStream("/rules/spreadsheets/rules.xls");
         //System.out.println(getDRL(in));
@@ -61,15 +59,14 @@ public class DecisionTableTest
         try {
 			execute( kc );
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private static KnowledgeBase createKnowledgeBaseFromSpreadsheet()
-	
 	            throws Exception {
 	
+		
 	        DecisionTableConfiguration dtconf = KnowledgeBuilderFactory
 	
 	                .newDecisionTableConfiguration();
