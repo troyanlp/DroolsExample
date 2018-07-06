@@ -59,9 +59,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>pl.maciejwalkowiak</groupId>
-			<artifactId>junit-drools</artifactId>
-			<version>1.0</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -77,10 +77,7 @@
 	</build>
 	
 	<repositories>
-		<repository>
-			<id>maciejwalkowiak.pl</id>
-			<url>https://github.com/maciejwalkowiak/maven-repo/raw/releases/</url>
-		</repository>
+
 	</repositories>
 
 

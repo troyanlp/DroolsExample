@@ -15,7 +15,6 @@ rule "Initial rule"
 		);
 	then
 		order.setTotalPrice(totalPrice);
-		System.out.println("Total price is: " + totalPrice);
 end
 
 
