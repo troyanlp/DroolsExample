@@ -183,18 +183,34 @@ public class DlrTest {
 					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 625.5);
 				} else if (name.compareTo("Number of products rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
-					switch (o.getCustomer().getStatus()) {
-					case Customer.DEFAULT_CUSTOMER:
-						assertTrue(o.getTotalPrice() == 590.75);
-						break;
-					case Customer.SILVER_CUSTOMER:
-						assertTrue(o.getTotalPrice() == 561.2125);
-						break;
-					case Customer.GOLD_CUSTOMER:
-						assertTrue(o.getTotalPrice() == 531.675);
-						break;
+					if (Order.isComparedToDate("01/07/2018", true) && Order.isComparedToDate("01/10/2018", false)) {
+						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
+						System.out.println(o.getTotalPrice());
+						switch (o.getCustomer().getStatus()) {
+						case Customer.DEFAULT_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 590.75);
+							break;
+						case Customer.SILVER_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 561.2125);
+							break;
+						case Customer.GOLD_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 531.675);
+							break;
+						}
+					} else {
+						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
+						System.out.println(o.getTotalPrice());
+						switch (o.getCustomer().getStatus()) {
+						case Customer.DEFAULT_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 695);
+							break;
+						case Customer.SILVER_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 660.25);
+							break;
+						case Customer.GOLD_CUSTOMER:
+							assertTrue(o.getTotalPrice() == 625.5);
+							break;
+						}
 					}
 				}
 			}
