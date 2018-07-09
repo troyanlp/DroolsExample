@@ -26,7 +26,7 @@ import com.everis.drools.entity.Customer;
 import com.everis.drools.entity.Order;
 import com.everis.drools.entity.Product;
 
-public class ExcelTest {
+public class DecisionTableTest {
 
 	private static StatelessKnowledgeSession session;
 	KieSession ksession;

@@ -1,89 +1,30 @@
 package com.everis.drools;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.drools.decisiontable.InputType;
-import org.drools.decisiontable.SpreadsheetCompiler;
 import org.kie.api.KieServices;
-import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
-import org.kie.internal.KnowledgeBase;
-import org.kie.internal.KnowledgeBaseFactory;
-import org.kie.internal.builder.DecisionTableConfiguration;
-import org.kie.internal.builder.DecisionTableInputType;
-import org.kie.internal.builder.KnowledgeBuilder;
-import org.kie.internal.builder.KnowledgeBuilderFactory;
-import org.kie.internal.io.ResourceFactory;
-import org.kie.internal.runtime.StatelessKnowledgeSession;
 
 import com.everis.drools.entity.Customer;
 import com.everis.drools.entity.Order;
 import com.everis.drools.entity.Product;
 
-public class DecisionTableTest {
-	private static StatelessKnowledgeSession session;
-
+public class DrlMain {
 	public static void main(String[] args) {
 		// KieServices is the factory for all KIE services
-		DecisionTableTest test = new DecisionTableTest();
-		try {
-			test.readExcel();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void readExcel() throws Exception {
 		KieServices ks = KieServices.Factory.get();
-
-		// Load Excel file
-		KnowledgeBase knowledgeBase = createKnowledgeBaseFromSpreadsheet();
-		session = knowledgeBase.newStatelessKnowledgeSession();
 
 		// From the kie services, a container is created from the classpath
 		KieContainer kc = ks.getKieClasspathContainer();
 
-		// InputStream in =
-		// getClass().getResourceAsStream("/rules/spreadsheets/rules.xls");
-		// System.out.println(getDRL(in));
-
 		try {
 			execute(kc);
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	private static KnowledgeBase createKnowledgeBaseFromSpreadsheet() throws Exception {
-
-		DecisionTableConfiguration dtconf = KnowledgeBuilderFactory.newDecisionTableConfiguration();
-
-		dtconf.setInputType(DecisionTableInputType.XLS);
-
-		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-
-		knowledgeBuilder.add(ResourceFactory.newClassPathResource("rules/spreadsheets/rules.xls"), ResourceType.DTABLE,
-				dtconf);
-
-		if (knowledgeBuilder.hasErrors()) {
-			throw new RuntimeException(knowledgeBuilder.getErrors().toString());
-		}
-
-		KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
-
-		knowledgeBase.addKnowledgePackages(knowledgeBuilder.getKnowledgePackages());
-
-		return knowledgeBase;
-
-	}
-
-	private String getDRL(InputStream stream) {
-		SpreadsheetCompiler comp = new SpreadsheetCompiler();
-		String drl = comp.compile(false, stream, InputType.XLS);
-		return drl;
 	}
 
 	public static void execute(KieContainer kc) throws Exception {
@@ -95,7 +36,9 @@ public class DecisionTableTest {
 
 		for (int i = 0; i < orderList.size(); i++) {
 			Order o = orderList.get(i);
-			session.execute(o);
+			ksession.insert(o);
+			ksession.fireAllRules();
+
 		}
 
 		showResults(orderList);
@@ -116,25 +59,25 @@ public class DecisionTableTest {
 
 		List<Order> orderList = new ArrayList<Order>();
 		{
-			Order order = new Order(customerA, true);
+			Order order = new Order(customerA, false);
 			order.addProduct(productA);
 			order.addProduct(productB);
 			orderList.add(order);
 		}
 		{
-			Order order = new Order(customerB, true);
+			Order order = new Order(customerB, false);
 			order.addProduct(productA);
 			order.addProduct(productB);
 			orderList.add(order);
 		}
 		{
-			Order order = new Order(customerC, true);
+			Order order = new Order(customerC, false);
 			order.addProduct(productA);
 			order.addProduct(productB);
 			orderList.add(order);
 		}
 		{
-			Order order = new Order(customerD, true);
+			Order order = new Order(customerD, false);
 			order.addProduct(productA);
 			order.addProduct(productB);
 			order.addProduct(new Product(3, "Product 3", 60));
@@ -148,7 +91,7 @@ public class DecisionTableTest {
 			orderList.add(order);
 		}
 		{
-			Order order = new Order(customerE, true);
+			Order order = new Order(customerE, false);
 			order.addProduct(productA);
 			order.addProduct(productB);
 			order.addProduct(new Product(3, "Product 3", 60));
