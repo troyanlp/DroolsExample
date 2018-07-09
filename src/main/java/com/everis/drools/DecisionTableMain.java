@@ -100,11 +100,9 @@ public class DecisionTableMain {
 
 		showResults(orderList);
 
-		ksession.dispose();
-
 	}
 
-	private static List<Order> getInitData() throws Exception {
+	private static List<Order> getInitData() {
 		Customer customerA = new Customer(Customer.DEFAULT_CUSTOMER, "Customer A");
 		Customer customerB = new Customer(Customer.SILVER_CUSTOMER, "Customer B");
 		Customer customerC = new Customer(Customer.GOLD_CUSTOMER, "Customer C");

@@ -22,7 +22,6 @@ public class DrlMain {
 		try {
 			execute(kc);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -47,7 +46,7 @@ public class DrlMain {
 
 	}
 
-	private static List<Order> getInitData() throws Exception {
+	private static List<Order> getInitData() {
 		Customer customerA = new Customer(Customer.DEFAULT_CUSTOMER, "Customer A");
 		Customer customerB = new Customer(Customer.SILVER_CUSTOMER, "Customer B");
 		Customer customerC = new Customer(Customer.GOLD_CUSTOMER, "Customer C");
