@@ -43,9 +43,6 @@ public class DlrTest {
 
 		session.insert(order);
 
-		// ExecutionResults results = (ExecutionResults)
-		// session.execute(CommandFactory.newInsert(order));
-
 		session.addEventListener(new DefaultAgendaEventListener() {
 			public void afterMatchFired(AfterMatchFiredEvent event) {
 				super.afterMatchFired(event);
@@ -61,30 +58,6 @@ public class DlrTest {
 		});
 
 		session.fireAllRules();
-		// session.fireAllRules(new RuleNameEqualsAgendaFilter("Initial rule"));
-		// session.fireAllRules(new AgendaFilter() {
-		//
-		// @Override
-		// public boolean accept(Match arg0) {
-		// // TODO Auto-generated method stub
-		// if (arg0.getRule().getName().compareTo("Initial rule") == 0) {
-		// return true;
-		// } else if (arg0.getRule().getName().compareTo("SILVER customer rule") == 0) {
-		// return true;
-		// } else {
-		// return false;
-		// }
-		// }
-		//
-		// });
-
-		// System.out.println(order.getTotalPrice());
-
-		// session.dispose();
-		// session.insert(order);
-
-		// session.fireAllRules(new RuleNameEqualsAgendaFilter("SILVER customer rule"));
-		// System.out.println(order.getTotalPrice());
 	}
 
 	@Test

@@ -13,6 +13,10 @@ public class Order {
 	private boolean decisionTable = false;
 	private static LocalDate date;
 
+	public Order() {
+
+	}
+
 	public Order(Customer customer, boolean decisionTable) {
 		super();
 		this.customer = customer;
@@ -63,8 +67,7 @@ public class Order {
 	public static boolean isComparedToDate(String dateTable, boolean greaterThan) {
 		boolean result = true;
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate localdate = null;
-		localdate = LocalDate.parse(dateTable, formatter);
+		LocalDate localdate = LocalDate.parse(dateTable, formatter);
 
 		if (greaterThan) {
 			if (date.isAfter(localdate) || date.isEqual(localdate))
@@ -79,6 +82,14 @@ public class Order {
 		}
 
 		return result;
+	}
+
+	public static LocalDate getDate() {
+		return date;
+	}
+
+	public static void setDate(LocalDate date) {
+		Order.date = date;
 	}
 
 }
