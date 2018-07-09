@@ -34,7 +34,7 @@ public class DlrTest {
 
 	@Test
 	public void shouldCalculateTotalPrice() {
-		Customer customerA = new Customer(Customer.SILVER_CUSTOMER, "Customer A");
+		Customer customerA = new Customer(Customer.DEFAULT_CUSTOMER, "Customer A");
 		Product productA = new Product(1, "Product 1", 350);
 		Product productB = new Product(2, "Product 2", 60);
 		Order order = new Order(customerA, false);
@@ -49,9 +49,6 @@ public class DlrTest {
 				Order o = (Order) event.getMatch().getObjects().get(0);
 				if (event.getMatch().getRule().getName().compareTo("Initial rule") == 0) {
 					assertTrue(order.getTotalPrice() == 410);
-				} else if (event.getMatch().getRule().getName().compareTo("SILVER customer rule") == 0) {
-					assertTrue(order.getTotalPrice() == 389.5);
-
 				}
 
 			}

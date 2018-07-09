@@ -9,6 +9,7 @@ public class Order {
 
 	private Customer customer;
 	private List<Product> products = new ArrayList<Product>();
+	public int numProducts = 0;
 	private double totalPrice;
 	private boolean decisionTable = false;
 	private static LocalDate date;
@@ -50,6 +51,7 @@ public class Order {
 
 	public void addProduct(Product product1) {
 		products.add(product1);
+		numProducts++;
 	}
 
 	public void calculateTotalPrice() {
