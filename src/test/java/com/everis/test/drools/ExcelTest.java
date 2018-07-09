@@ -92,7 +92,6 @@ public class ExcelTest {
 				String rule = event.getMatch().getRule().getName();
 				Order o = (Order) event.getMatch().getObjects().get(0);
 				if (rule.compareTo("Initial Rule") == 0) {
-					System.out.println("Regla: " + rule + " Precio: " + o.getTotalPrice());
 					assertTrue(order.getTotalPrice() == 410);
 				}
 
@@ -114,16 +113,9 @@ public class ExcelTest {
 		order2.addProduct(productA);
 		order2.addProduct(productB);
 
-		// ksession.insert(order1);
-		// ksession.insert(order2);
-
 		session.execute(order1);
 		session.execute(order2);
 
-		// ksession.fireAllRules();
-
-		System.out.println(order1.getTotalPrice());
-		System.out.println(order2.getTotalPrice());
 		assertTrue(order1.getTotalPrice() == 389.5);
 		assertTrue(order2.getTotalPrice() == 369);
 	}
@@ -179,32 +171,20 @@ public class ExcelTest {
 			orderList.add(order);
 		}
 
-		// orderList.forEach(k -> ksession.insert(k));
-
 		ksession.addEventListener(new DefaultAgendaEventListener() {
 			public void afterMatchFired(AfterMatchFiredEvent event) {
 				super.afterMatchFired(event);
 				Order o = (Order) event.getMatch().getObjects().get(0);
 				String name = event.getMatch().getRule().getName();
-				// System.out.println("Estoy en el event listener de la regla: " +
-				// event.getMatch().getRule().getName() + " y el customer es: " +
-				// o.getCustomer().getName());
+
 				if (event.getMatch().getRule().getName().compareTo("Initial rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 695);
 				} else if (name.compareTo("SILVER customer rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 660.25);
 				} else if (name.compareTo("GOLD customer rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 625.5);
 				} else if (name.compareTo("Number of products rule") == 0) {
 					if (Order.isComparedToDate("01/07/2018", true) && Order.isComparedToDate("01/10/2018", false)) {
-						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-						System.out.println(o.getTotalPrice());
 						switch (o.getCustomer().getStatus()) {
 						case Customer.DEFAULT_CUSTOMER:
 							assertTrue(o.getTotalPrice() == 590.75);
@@ -217,8 +197,6 @@ public class ExcelTest {
 							break;
 						}
 					} else {
-						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-						System.out.println(o.getTotalPrice());
 						switch (o.getCustomer().getStatus()) {
 						case Customer.DEFAULT_CUSTOMER:
 							assertTrue(o.getTotalPrice() == 695);
@@ -236,8 +214,6 @@ public class ExcelTest {
 		});
 
 		orderList.forEach(k -> session.execute(k));
-
-		// ksession.fireAllRules();
 
 	}
 

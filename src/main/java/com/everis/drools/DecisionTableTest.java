@@ -32,7 +32,6 @@ public class DecisionTableTest {
 		try {
 			test.readExcel();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -60,26 +59,17 @@ public class DecisionTableTest {
 
 	private static KnowledgeBase createKnowledgeBaseFromSpreadsheet() throws Exception {
 
-		DecisionTableConfiguration dtconf = KnowledgeBuilderFactory
-
-				.newDecisionTableConfiguration();
+		DecisionTableConfiguration dtconf = KnowledgeBuilderFactory.newDecisionTableConfiguration();
 
 		dtconf.setInputType(DecisionTableInputType.XLS);
 
-		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
+		KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
 
-				.newKnowledgeBuilder();
-
-		knowledgeBuilder.add(ResourceFactory
-
-				.newClassPathResource("rules/spreadsheets/rules.xls"),
-
-				ResourceType.DTABLE, dtconf);
+		knowledgeBuilder.add(ResourceFactory.newClassPathResource("rules/spreadsheets/rules.xls"), ResourceType.DTABLE,
+				dtconf);
 
 		if (knowledgeBuilder.hasErrors()) {
-
 			throw new RuntimeException(knowledgeBuilder.getErrors().toString());
-
 		}
 
 		KnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();

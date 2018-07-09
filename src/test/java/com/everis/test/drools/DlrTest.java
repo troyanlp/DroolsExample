@@ -47,10 +47,10 @@ public class DlrTest {
 			public void afterMatchFired(AfterMatchFiredEvent event) {
 				super.afterMatchFired(event);
 				Order o = (Order) event.getMatch().getObjects().get(0);
-				if (event.getMatch().getRule().getName().compareTo("Initial rule") == 0) {
+				String rule = event.getMatch().getRule().getName();
+				if (rule.compareTo("Initial rule") == 0) {
 					assertTrue(order.getTotalPrice() == 410);
 				}
-
 			}
 		});
 
@@ -137,25 +137,15 @@ public class DlrTest {
 				super.afterMatchFired(event);
 				Order o = (Order) event.getMatch().getObjects().get(0);
 				String name = event.getMatch().getRule().getName();
-				// System.out.println("Estoy en el event listener de la regla: " +
-				// event.getMatch().getRule().getName() + " y el customer es: " +
-				// o.getCustomer().getName());
-				if (event.getMatch().getRule().getName().compareTo("Initial rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
+
+				if (name.compareTo("Initial rule") == 0) {
 					assertTrue(o.getTotalPrice() == 695);
 				} else if (name.compareTo("SILVER customer rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 660.25);
 				} else if (name.compareTo("GOLD customer rule") == 0) {
-					System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-					System.out.println(o.getTotalPrice());
 					assertTrue(o.getTotalPrice() == 625.5);
 				} else if (name.compareTo("Number of products rule") == 0) {
 					if (Order.isComparedToDate("01/07/2018", true) && Order.isComparedToDate("01/10/2018", false)) {
-						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-						System.out.println(o.getTotalPrice());
 						switch (o.getCustomer().getStatus()) {
 						case Customer.DEFAULT_CUSTOMER:
 							assertTrue(o.getTotalPrice() == 590.75);
@@ -168,8 +158,6 @@ public class DlrTest {
 							break;
 						}
 					} else {
-						System.out.println("Regla: " + name + " Cliente: " + o.getCustomer().getName());
-						System.out.println(o.getTotalPrice());
 						switch (o.getCustomer().getStatus()) {
 						case Customer.DEFAULT_CUSTOMER:
 							assertTrue(o.getTotalPrice() == 695);
