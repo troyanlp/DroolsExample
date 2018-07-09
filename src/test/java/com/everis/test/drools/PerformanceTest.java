@@ -3,6 +3,7 @@ package com.everis.test.drools;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Test;
 import org.kie.api.KieServices;
 import org.kie.api.io.ResourceType;
 import org.kie.api.runtime.KieContainer;
@@ -22,7 +23,8 @@ import com.everis.drools.entity.Product;
 
 public class PerformanceTest {
 
-	public static void main(String[] args) {
+	@Test(timeout = 3000)
+	public void performanceTest() {
 		codeMode();
 		drlMode();
 		decisionTableMode();
