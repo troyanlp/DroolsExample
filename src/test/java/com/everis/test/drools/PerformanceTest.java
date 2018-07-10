@@ -24,9 +24,17 @@ import com.everis.drools.entity.Product;
 public class PerformanceTest {
 
 	@Test(timeout = 3000)
-	public void performanceTest() {
+	public void codeTest() {
 		codeMode();
+	}
+
+	@Test(timeout = 3000)
+	public void DlrTest() {
 		drlMode();
+	}
+
+	@Test(timeout = 3000)
+	public void DecisionTableTest() {
 		decisionTableMode();
 	}
 
@@ -70,14 +78,19 @@ public class PerformanceTest {
 
 			orderList = getInitData(false);
 
-			long start = System.currentTimeMillis();
+			long startFull = System.currentTimeMillis();
+			orderList.forEach(k -> ksession.insert(k));
 			for (int i = 0; i < orderList.size(); i++) {
+				long start = System.currentTimeMillis();
 				Order o = orderList.get(i);
 				ksession.insert(o);
+				ksession.fireAllRules();
+				long end = System.currentTimeMillis();
+				System.out.println("Drl Mode took " + (end - start) + " MilliSeconds");
 			}
-			ksession.fireAllRules();
-			long end = System.currentTimeMillis();
-			System.out.println("Drl Mode took " + (end - start) + " MilliSeconds");
+
+			long endFull = System.currentTimeMillis();
+			System.out.println("Drl Mode took " + (endFull - startFull) + " MilliSeconds IN TOTAL!");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,10 +109,6 @@ public class PerformanceTest {
 
 			// From the kie services, a container is created from the classpath
 			KieContainer kc = ks.getKieClasspathContainer();
-
-			// InputStream in =
-			// getClass().getResourceAsStream("/rules/spreadsheets/rules.xls");
-			// System.out.println(getDRL(in));
 
 			try {
 				// From the container, a session is created based on
